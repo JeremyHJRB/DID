@@ -6,10 +6,14 @@ public class KarakterController : MonoBehaviour
 {
     private Rigidbody2D rb2D;
     Animator anim;
+    [SerializeField]Transform goundCheck;
+    [SerializeField]LayerMask groundLayer;
 
+    const float groundRadius = 0.2f;
     public float moveSpeed = 3f;
     private float moveHorizontal;
     // Start is called before the first frame update
+    [SerializeField]bool isGrounded=false;
     bool faceRight = true;
 
     void Awake()
@@ -28,12 +32,22 @@ public class KarakterController : MonoBehaviour
 
     void FixedUpdate()
     {
+        groundCheck();
         Move(moveHorizontal);
+    }
+
+    void groundCheck()
+    {
+        isGrounded = false;
+        //check if the player is on the ground
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(goundCheck.position, groundRadius, groundLayer);
+        if (colliders.Length > 0)
+            isGrounded = true;
     }
 
     
     void Move(float dir){
-        float xVal = dir * moveSpeed * 100 * Time.deltaTime;
+        float xVal = dir * moveSpeed * 100 * Time.fixedDeltaTime;
         Vector2 targetVelocity = new Vector2(xVal,rb2D.velocity.y);
         rb2D.velocity = targetVelocity;
 
