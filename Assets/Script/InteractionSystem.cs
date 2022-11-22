@@ -8,15 +8,16 @@ public class InteractionSystem : MonoBehaviour
     //detection point
     public Transform detectionPoint;
     //detection radius
-    private const float detectionRadius=0.2f;
+    private const float detectionRadius=0.3f;
     //layer mask
     public LayerMask detectionLayer;
-
+    //chaced triger object
+    public GameObject detectedObject;
 
     void Update(){
         if (detectObject()){
             if (interactInput()){
-                Debug.Log("Interact");
+                detectedObject.GetComponent<Item>().Interact();
             }
         }
     }
@@ -25,6 +26,19 @@ public class InteractionSystem : MonoBehaviour
     }
 
     bool detectObject(){
-        return Physics2D.OverlapCircle(detectionPoint.position, detectionRadius, detectionLayer);
+        Collider2D obj = Physics2D.OverlapCircle(detectionPoint.position, detectionRadius, detectionLayer);
+        if (obj == null){
+            detectedObject = null;
+            return false;
+        }
+        else{
+            detectedObject = obj.gameObject;
+            return true;
+        }
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(detectionPoint.position, detectionRadius);
     }
 }
