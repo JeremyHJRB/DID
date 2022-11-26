@@ -25,6 +25,8 @@ public class KarakterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(canMove()==false)
+            return;
         //store the moveHorizontal value
         moveHorizontal = Input.GetAxisRaw("Horizontal");
 
@@ -34,6 +36,14 @@ public class KarakterController : MonoBehaviour
     {
         groundCheck();
         Move(moveHorizontal);
+    }
+
+    bool canMove()
+    {
+        bool can = true;
+        if(FindObjectOfType<InteractionSystem>().isUsed)
+            can = false;
+        return can;
     }
 
     void groundCheck()

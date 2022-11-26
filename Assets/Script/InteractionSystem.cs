@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InteractionSystem : MonoBehaviour
 {
+    [Header ("Detection Parameters")]
     //detection point
     public Transform detectionPoint;
     //detection radius
@@ -13,6 +14,15 @@ public class InteractionSystem : MonoBehaviour
     public LayerMask detectionLayer;
     //chaced triger object
     public GameObject detectedObject;
+    [Header ("Use Fields")]
+    //Picked up window object
+    public GameObject UsedWindow;
+    public Image UsedImage;
+    public Text UsedText;
+    public bool isUsed;
+    [Header ("Other")]
+    //list of picked up items
+    public List<GameObject> pickedItems = new List<GameObject>();
 
     void Update(){
         if (detectObject()){
@@ -21,6 +31,12 @@ public class InteractionSystem : MonoBehaviour
             }
         }
     }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(detectionPoint.position, detectionRadius);
+    }
+
     bool interactInput(){
         return Input.GetKeyDown(KeyCode.E);
     }
@@ -37,8 +53,22 @@ public class InteractionSystem : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected() {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(detectionPoint.position, detectionRadius);
+    public void PickUpItem(GameObject item){
+        pickedItems.Add(item);
     }
+
+    public void UsedItem(Item item){
+        if(isUsed){
+            UsedWindow.SetActive(false);
+            isUsed = false;
+        }
+        else{
+            UsedImage.sprite = item.GetComponent<SpriteRenderer>().sprite;
+            UsedText.text = item.usedText;
+            UsedWindow.SetActive(true);
+            isUsed = true;
+        }
+        
+    }
+
 }
