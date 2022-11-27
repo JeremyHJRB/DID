@@ -15,6 +15,7 @@ public class KarakterController : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]bool isGrounded=false;
     bool faceRight = true;
+    [SerializeField]bool isWalking = false;
 
     void Awake()
     {
@@ -29,7 +30,14 @@ public class KarakterController : MonoBehaviour
             return;
         //store the moveHorizontal value
         moveHorizontal = Input.GetAxisRaw("Horizontal");
-
+        if(Input.GetAxisRaw("Horizontal") != 0)
+        {
+            isWalking = true;
+        }
+        else
+        {
+            isWalking = false;
+        }
     }
 
     void FixedUpdate()
@@ -42,6 +50,14 @@ public class KarakterController : MonoBehaviour
     {
         bool can = true;
         if(FindObjectOfType<InteractionSystem>().isUsed)
+            can = false;
+        return can;
+    }
+
+    public bool canInteract()
+    {
+        bool can = true;
+        if(isWalking==true)
             can = false;
         return can;
     }
@@ -60,9 +76,7 @@ public class KarakterController : MonoBehaviour
         float xVal = dir * moveSpeed * 100 * Time.fixedDeltaTime;
         Vector2 targetVelocity = new Vector2(xVal,rb2D.velocity.y);
         rb2D.velocity = targetVelocity;
-
         
-
         //if looking right click left flip character to left
         if(dir < 0 && faceRight){
             transform.localScale = new Vector3(-1,1,1);
@@ -77,6 +91,7 @@ public class KarakterController : MonoBehaviour
 
         // 0 = idle, 3 = move
         anim.SetFloat("xVelocity", Mathf.Abs(rb2D.velocity.x));
+        
 
     }
 }

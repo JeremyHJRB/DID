@@ -26,8 +26,10 @@ public class InteractionSystem : MonoBehaviour
 
     void Update(){
         if (detectObject()){
-            if (interactInput()){
+            if(FindObjectOfType<KarakterController>().canInteract()){
+                if (interactInput()){
                 detectedObject.GetComponent<Item>().Interact();
+                }
             }
         }
     }
