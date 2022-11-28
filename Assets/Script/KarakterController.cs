@@ -51,6 +51,8 @@ public class KarakterController : MonoBehaviour
         bool can = true;
         if(FindObjectOfType<InteractionSystem>().isUsed)
             can = false;
+        if(FindObjectOfType<InteractionSystem>().isPickedUp)
+            can = false;
         return can;
     }
 

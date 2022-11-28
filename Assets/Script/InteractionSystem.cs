@@ -20,6 +20,12 @@ public class InteractionSystem : MonoBehaviour
     public Image UsedImage;
     public Text UsedText;
     public bool isUsed;
+    [Header ("Pick Up Fields")]
+    //Picked up window object
+    public GameObject PickUpWindow;
+    public Image PickUpImage;
+    public Text PickUpText;
+    public bool isPickedUp;
     [Header ("Other")]
     //list of picked up items
     public List<GameObject> pickedItems = new List<GameObject>();
@@ -29,6 +35,13 @@ public class InteractionSystem : MonoBehaviour
             if(FindObjectOfType<KarakterController>().canInteract()){
                 if (interactInput()){
                 detectedObject.GetComponent<Item>().Interact();
+                }
+            }
+        } else {
+            if (interactInput()){
+                if (isPickedUp){
+                    PickUpWindow.SetActive(false);
+                    isPickedUp = false;
                 }
             }
         }
@@ -57,6 +70,10 @@ public class InteractionSystem : MonoBehaviour
 
     public void PickUpItem(GameObject item){
         pickedItems.Add(item);
+        PickUpImage.sprite = item.GetComponent<SpriteRenderer>().sprite;
+        PickUpText.text = item.GetComponent<Item>().usedText;
+        PickUpWindow.SetActive(true);
+        isPickedUp = true;
     }
 
     public void UsedItem(Item item){
