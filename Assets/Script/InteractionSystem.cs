@@ -17,8 +17,6 @@ public class InteractionSystem : MonoBehaviour
     [Header ("Use Fields")]
     //Picked up window object
     public GameObject UsedWindow;
-    public Image UsedImage;
-    public Text UsedText;
     public bool isUsed;
     [Header ("Pick Up Fields")]
     //Picked up window object
@@ -82,8 +80,6 @@ public class InteractionSystem : MonoBehaviour
             isUsed = false;
         }
         else{
-            UsedImage.sprite = item.GetComponent<SpriteRenderer>().sprite;
-            UsedText.text = item.usedText;
             UsedWindow.SetActive(true);
             isUsed = true;
         }

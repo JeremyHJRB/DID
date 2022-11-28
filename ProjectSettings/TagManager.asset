@@ -41,11 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Item
-    uniqueID: 4144976015
-    locked: 0
   - name: Environment
     uniqueID: 3825741067
+    locked: 0
+  - name: Background
+    uniqueID: 1087081003
+    locked: 0
+  - name: UI
+    uniqueID: 1280868559
+    locked: 0
+  - name: Item
+    uniqueID: 4144976015
     locked: 0
   - name: Karakter
     uniqueID: 3202666689
