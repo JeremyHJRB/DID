@@ -14,9 +14,22 @@ public class ChoiceHandler : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        // click atas button
         atasButton.onClick.AddListener(OnAtasButtonClick);
+        // click bawah button
         bawahButton.onClick.AddListener(OnBawahButtonClick);
-        choiceWindow.transform.GetChild(0).GetChild(choice).GetComponent<TextMeshProUGUI>().color = Color.black;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            OnBawahButtonClick();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            OnAtasButtonClick();
+        }
     }
 
     private void OnAtasButtonClick()
@@ -25,8 +38,6 @@ public class ChoiceHandler : MonoBehaviour
         choice++;
         
         choiceWindow.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 50);
-        choiceWindow.transform.GetChild(0).GetChild(choice).GetComponent<TextMeshProUGUI>().color = Color.black;
-        ResetColor();
     }
 
     private void OnBawahButtonClick()
@@ -35,8 +46,6 @@ public class ChoiceHandler : MonoBehaviour
         choice--;
         
         choiceWindow.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, -50);
-        choiceWindow.transform.GetChild(0).GetChild(choice).GetComponent<TextMeshProUGUI>().color = Color.black;
-        ResetColor();
     }
 
     private void ResetColor()
